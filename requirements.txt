@@ -1,0 +1,7 @@
+streamlit
+pandas
+numpy
+py3Dmol
+stmol
+streamlit-aggrid
+Pillow
