@@ -8,10 +8,10 @@ DiPPI (Drugs in Protein-Protein Interfaces) provides a dataset for the investiga
 
 ## Datasets
 
-**drugs_in_interface**: Small molecules analyzed in this study. PDB ligand ID and FDA approval of the molecule are provided.
-**eliminatedMolecules**: Small molecules eliminated in the study are listed. These molecules are not available on the website.
-**ligandData**: Molecular descriptors of the ligand data, along with other characteristics such as FDA approval, source database, ECFP4 and Pharmacophore fingerprint clusters, SMILES ID and more.
-**ligand_data_fda**: FDA-approved subset of the ligand data.
-**protein_summary**: Summary information of used protein interfaces with their corresponding ligand information.
-**protein_summary_fda**: FDA-approved subset of the interface data.
+-**drugs_in_interface**: Small molecules analyzed in this study. PDB ligand ID and FDA approval of the molecule are provided.
+-**eliminatedMolecules**: Small molecules eliminated in the study are listed. These molecules are not available on the website.
+-**ligandData**: Molecular descriptors of the ligand data, along with other characteristics such as FDA approval, source database, ECFP4 and Pharmacophore fingerprint clusters, SMILES ID and more.
+-**ligand_data_fda**: FDA-approved subset of the ligand data.
+-**protein_summary**: Summary information of used protein interfaces with their corresponding ligand information.
+-**protein_summary_fda**: FDA-approved subset of the interface data.
 
