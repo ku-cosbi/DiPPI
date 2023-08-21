@@ -15,10 +15,3 @@ DiPPI (Drugs in Protein-Protein Interfaces) provides a dataset for the investiga
 - **protein_summary**: Summary information of used protein interfaces with their corresponding ligand information.
 - **protein_summary_fda**: FDA-approved subset of the interface data.
 
-
-
-- **featurevector_calm1_xx** : Feature vector created for benchmarking CALM1 variations. AF and PDB versions, as well as imputed and not imputed versions are found in the relevant folders.
-- **training_uptodate_full_pdb_imputed_wo3genes** : Imputed PDB training feature vector without datapoints from BRCA1, P53 and CALM1.File is zipped due to size limitations.
-- **training_uptodate_full_pdb_raw_wo3genes** : Non-imputed PDB training feature vector without datapoints from BRCA1, P53 and CALM1.
-- **training_uptodate_full_alphafold_imputed_wo3genes** : Imputed AlphaFold training feature vector without datapoints from BRCA1, P53 and CALM1. File is zipped due to size limitations.
-- **training_uptodate_full_alphafold_raw_wo3genes** : Non-imputed AlphaFold training feature vector without datapoints from BRCA1, P53 and CALM1.
