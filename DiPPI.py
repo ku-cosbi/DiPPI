@@ -22,7 +22,7 @@ PAGE_CONFIG = {"page_title":"DiPPI",
 
                "layout":"wide",
                "initial_sidebar_state":"auto"}
-
+st.write('lsfjsl')
 st.set_page_config(**PAGE_CONFIG)
 #st.subheader('DiPPI:  Drugs in Protein Protein Interface')
 #st.markdown('Welcome to **D**rugs **i**n **P**rotein-**P**rotein **I**nterface Website!')
