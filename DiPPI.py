@@ -32,7 +32,6 @@ st.set_page_config(**PAGE_CONFIG)
 new_title = '<p style="font-family:Trebuchet MS; text-align: center; color:#4682B4; font-size: 36px;">Welcome to <strong>D</strong>rugs <strong>i</strong>n <strong>P</strong>rotein-<strong>P</strong>rotein <strong>I</strong>nterfaces Website</p>'
 st.markdown(new_title, unsafe_allow_html=True)
 st.text("")
-st.write('lsfjsl')
 
 
 st.text("")
