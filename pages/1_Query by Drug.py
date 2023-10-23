@@ -28,6 +28,7 @@ st.markdown("""
 drugs_in_interface = pd.read_csv('data/drugs_in_interface.txt', sep='\t')
 drugs_in_interface.drop(columns = 'FDA approved', inplace=True)
 proteins_df = pd.read_csv('data/protein_summary.txt', sep='\t')
+proteins_df['Ligand_ID'] = proteins_df['Ligand_ID'].astype('str')
 proteins_df['Ligand_ID'] = proteins_df['Ligand_ID'].apply(lambda  x:x.split(','))
 proteins_df['Ligand_ID'] = proteins_df['Ligand_ID'].apply(lambda  x:[i.strip() for i in x])
 ligands_df = pd.read_csv('data/ligand_data.txt', sep = '\t')
