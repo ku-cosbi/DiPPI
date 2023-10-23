@@ -56,14 +56,14 @@ def download_df():
 original_title = '<p style="font-family:Trebuchet MS; color:#4682B4; font-size: 35px; font-weight:bold">DiPPI:  Drugs in Protein Protein Interface</p>'
 st.markdown(original_title, unsafe_allow_html=True)
 
-proteins_df = pd.read_csv('/data/protein_summary.txt', sep='\t')
-interfaces_df = pd.read_csv('data/interface_data.txt', sep='\t')
-ligands_df = pd.read_csv('data/ligand_data.txt', sep = '\t')
+proteins_df = pd.read_csv('/Users/fatmacankara/Desktop/PhD/tuseb/DiPPI/data/protein_summary.txt', sep='\t')
+interfaces_df = pd.read_csv('/Users/fatmacankara/Desktop/PhD/tuseb/DiPPI/data/interface_data.txt', sep='\t')
+ligands_df = pd.read_csv('/Users/fatmacankara/Desktop/PhD/tuseb/DiPPI/data/ligand_data.txt', sep = '\t')
 interfaces_df = interfaces_df.drop(columns = ['fda_approved'])
 proteins_df_sel = pd.DataFrame(columns  = proteins_df.columns)
 
 
-selection = st.selectbox('Filter by', ("Filter by PDB ID", "Filter by UniProt ID", "Filter by Uniprot Sequence"))
+selection = st.selectbox('Filter by', ("Filter by PDB ID", "Filter by UniProt ID",  "Filter by Protein Name", "Filter by Uniprot Sequence"))
 
 if selection == 'Filter by PDB ID':
     pdb_selection = st.multiselect("Filter by PDB ID", proteins_df.PDB_ID)
@@ -90,6 +90,17 @@ elif selection == 'Filter by Uniprot Sequence':
     ligand_selection = st.multiselect("Filter by Ligand ID", ligands_df['Ligand ID'])
     if len(pdb_selection) > 0:
         proteins_df_sel = proteins_df[proteins_df.UNIPROT_Sequence.isin(pdb_selection)]
+    if len(ligand_selection) > 0:
+        proteins_df_sel['Ligand_ID'] = proteins_df_sel['Ligand_ID'].apply(lambda x: x.split(','))
+        proteins_df_sel = proteins_df_sel.explode(['Ligand_ID'])
+        proteins_df_sel.Ligand_ID = proteins_df_sel.Ligand_ID.apply(lambda x: x.strip())
+        proteins_df_sel = proteins_df_sel[proteins_df_sel['Ligand_ID'].isin(ligand_selection)]
+
+elif selection == 'Filter by Protein Name':
+    pdb_selection = st.multiselect("Filter by Protein Name", proteins_df.ProteinNames)
+    ligand_selection = st.multiselect("Filter by Ligand ID", ligands_df['Ligand ID'])
+    if len(pdb_selection) > 0:
+        proteins_df_sel = proteins_df[proteins_df.ProteinNames.isin(pdb_selection)]
     if len(ligand_selection) > 0:
         proteins_df_sel['Ligand_ID'] = proteins_df_sel['Ligand_ID'].apply(lambda x: x.split(','))
         proteins_df_sel = proteins_df_sel.explode(['Ligand_ID'])
