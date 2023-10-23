@@ -56,9 +56,9 @@ def download_df():
 original_title = '<p style="font-family:Trebuchet MS; color:#4682B4; font-size: 35px; font-weight:bold">DiPPI:  Drugs in Protein Protein Interface</p>'
 st.markdown(original_title, unsafe_allow_html=True)
 
-proteins_df = pd.read_csv('/Users/fatmacankara/Desktop/PhD/tuseb/DiPPI/data/protein_summary.txt', sep='\t')
-interfaces_df = pd.read_csv('/Users/fatmacankara/Desktop/PhD/tuseb/DiPPI/data/interface_data.txt', sep='\t')
-ligands_df = pd.read_csv('/Users/fatmacankara/Desktop/PhD/tuseb/DiPPI/data/ligand_data.txt', sep = '\t')
+proteins_df = pd.read_csv('data/protein_summary.txt', sep='\t')
+interfaces_df = pd.read_csv('data/interface_data.txt', sep='\t')
+ligands_df = pd.read_csv('data/ligand_data.txt', sep = '\t')
 interfaces_df = interfaces_df.drop(columns = ['fda_approved'])
 proteins_df_sel = pd.DataFrame(columns  = proteins_df.columns)
 
