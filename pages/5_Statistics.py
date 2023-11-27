@@ -27,7 +27,7 @@ df.loc[8] = ['Number of drug-like small molecules that bind to at least one inte
 df.loc[9] = ['Number of FDA-approved drugs that bind to at least one interface residue', '335']
 
 
-style = df.style.set_properties(**{'font-size': '10pt', 'font-family': 'Trebuchet MS','border-collapse': 'collapse','border': '1px solid black'}).hide_index()
+style = df.style.set_properties(**{'font-size': '10pt', 'font-family': 'Trebuchet MS','border-collapse': 'collapse','border': '1px solid black'}).hide()
 style.hide_columns()
 #st.write(style.to_html(), unsafe_allow_html=True)
 st.markdown(style.to_html(), unsafe_allow_html=True)
