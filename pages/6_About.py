@@ -1,28 +1,26 @@
 import streamlit as st
 from PIL import Image
 
-
-
-
-import streamlit as st
-
 st.set_page_config(
-        page_title="My Page Title",
+        page_title="About",
+        page_icon=Image.open("data/icon.png"),
+        layout="wide",
+        initial_sidebar_state="expanded"
 )
 #st.subheader('DiPPI:  Drugs in Protein Protein Interface')
-main_title = '<p style="font-family:Trebuchet MS; color:#4682B4; font-size: 35px; font-weight:bold">DiPPI:  Drugs in Protein Protein Interface</p>'
+main_title = '<p style="font-family:sans-serif; color:#5E2750; font-size: 35px; font-weight:bold">DiPPI:  Drugs in Protein Protein Interface</p>'
 st.markdown(main_title, unsafe_allow_html=True)
 #st.title('About')
 st.text('')
 st.text('')
-sub_title = '<p style="font-family:Trebuchet MS; color:#4682B4; font-size: 24px; font-weight:bold">About</p>'
+sub_title = '<p style="font-family:sans-serif; color:#77216F; font-size: 24px; font-weight:bold">About</p>'
 st.markdown(sub_title, unsafe_allow_html=True)
 
 st.markdown(""" 
  <style>
   .main-font
   { 
-  font-family:Trebuchet MS; font-size:14px;text-align: justify
+  font-family:sans-serif; font-size:14px;text-align: justify
   }
 </style>""", unsafe_allow_html=True)
 col1, col2  = st.columns(2)
@@ -35,13 +33,28 @@ with col1:
             ' interfaces for drug-repurposing studies.'
     st.markdown(f'<p class="main-font">{text}</p>', unsafe_allow_html=True)
 with col2:
-    image1 = Image.open("data/about_1.png")
-    st.image(image1)
+    st.markdown(
+        """
+        <style>
+            button[title^=Exit]+div [data-testid=stImage]{
+                text-align: center;
+                display: block;
+                margin-left: auto;
+                margin-right: auto;
+                width: 100%;
+            }
+        </style>
+        """, unsafe_allow_html=True
+    )
+
+    image1 = Image.open("data/icon1.png")
+    new_image = image1.resize((424, 330))
+    st.image(new_image)
     st.markdown(""" 
      <style>
       .center
       { 
-      font-family:Trebuchet MS; font-size:14px;text-align: center
+      font-family:sans-serif; font-size:14px;text-align: center
       }
     </style>""", unsafe_allow_html=True)
     st.markdown(f'<p class="center"><em>1AAQ with bound ligand PSI</em></p>', unsafe_allow_html=True)
@@ -67,15 +80,15 @@ text = 'Drug repurposing is an efficient strategy for identifying novel pharmaco
 
 
 
-sub_title = '<p style="font-family:Trebuchet MS; color:#4682B4; font-size: 24px; font-weight:bold; text-align: center">DiPPI Flowchart</p>'
-st.markdown(sub_title, unsafe_allow_html=True)
+# sub_title = '<p style="font-family:sans-serif; color:#77216F; font-size: 24px; font-weight:bold; text-align: center">DiPPI Flowchart</p>'
+# st.markdown(sub_title, unsafe_allow_html=True)
 
 # Load the image
-img = Image.open('data/about_2.png')
-#st.image('data/dippi_flow.png', output_format='PNG')
+image = Image.open('data/about.jpg')
+new_image = image.resize((269,317))
 
-# Display the image using Streamlit's image function
-st.image(img, caption='My Image', use_column_width=True, width=None)
+new_image = image.resize((897, 1056))
+st.image(new_image, caption='Flowchart of DiPPI process', use_column_width=True, width=50)
 
 # Apply CSS styles to center the image with its original size
 st.markdown(

@@ -5,62 +5,28 @@ import pandas as pd
 import streamlit as st
 import streamlit.components.v1 as components
 from st_aggrid import AgGrid, GridOptionsBuilder, GridUpdateMode
-
+from PIL import Image
+import warnings
+warnings.filterwarnings('ignore')
+st.set_page_config(
+        page_title="Query By Interface",
+        page_icon=Image.open("data/icon.png"),
+        layout="wide",
+        initial_sidebar_state="expanded"
+)
 
 # Download code from here: https://discuss.streamlit.io/t/automatic-download-select-and-download-file-with-single-button-click/15141/3
 # Downloaded on Jan 9, 2023
-def download_button(object_to_download, download_filename):
-    """
-    Generates a link to download the given object_to_download.
-    Params:
-    ------
-    object_to_download:  The object to be downloaded.
-    download_filename (str): filename and extension of file. e.g. mydata.csv,
-    Returns:
-    -------
-    (str): the anchor tag to download object_to_download
-    """
-    if isinstance(object_to_download, pd.DataFrame):
-        object_to_download = object_to_download.to_csv(index=False)
-
-    # Try JSON encode for everything else
-    else:
-        object_to_download = json.dumps(object_to_download)
-    try:
-        # some strings <-> bytes conversions necessary here
-        b64 = base64.b64encode(object_to_download.encode()).decode()
-
-    except AttributeError as e:
-        b64 = base64.b64encode(object_to_download).decode()
-
-    dl_link = f"""
-    <html>
-    <head>
-    <title>Start Auto Download file</title>
-    <script src="http://code.jquery.com/jquery-3.2.1.min.js"></script>
-    <script>
-    $('<a href="data:text/csv;base64,{b64}" download="{download_filename}">')[0].click()
-    </script>
-    </head>
-    </html>
-    """
-    return dl_link
-def download_df():
-    components.html(
-        download_button(df_result, st.session_state.filename),
-        height=0,
-    )
-
 
 #st.subheader('DiPPI:  Drugs in Protein Protein Interface')
-original_title = '<p style="font-family:Trebuchet MS; color:#4682B4; font-size: 35px; font-weight:bold">DiPPI:  Drugs in Protein Protein Interface</p>'
+original_title = '<p style="font-family:sans-serif; color:#5E2750; font-size: 35px; font-weight:bold">DiPPI:  Drugs in Protein Protein Interface</p>'
 st.markdown(original_title, unsafe_allow_html=True)
 
 proteins_df = pd.read_csv('data/protein_summary.txt', sep='\t')
 interfaces_df = pd.read_csv('data/interface_data.txt', sep='\t')
 ligands_df = pd.read_csv('data/ligand_data.txt', sep = '\t')
 interfaces_df = interfaces_df.drop(columns = ['fda_approved'])
-proteins_df_sel = pd.DataFrame(columns  = proteins_df.columns)
+proteins_df_sel = pd.DataFrame(columns = proteins_df.columns)
 
 
 selection = st.selectbox('Filter by', ("Filter by PDB ID", "Filter by UniProt ID",  "Filter by Protein Name", "Filter by Uniprot Sequence"))
@@ -119,16 +85,19 @@ if len(proteins_df_sel) != 0:
     int_builder.configure_pagination(enabled=True, paginationAutoPageSize=False, paginationPageSize=10)
     int_builder.configure_selection(selection_mode='multiple',use_checkbox=True)
 
-    st.markdown(f'<p class="main-font">List of selected structures:</p>', unsafe_allow_html=True)
+    st.markdown(f'<p class="main-font">Summary of selected structures. Select for a detailed view:</p>', unsafe_allow_html=True)
 
     gridoptions = int_builder.build()
+    gridoptions["columnDefs"][0]["checkboxSelection"]=True
+    gridoptions["columnDefs"][0]["headerCheckboxSelection"]=True	
+
 
 
     with st.spinner('Loading data...'):
         int_return = AgGrid(proteins_df_sel,
                             width='100%',
-                            height=(len(proteins_df_sel) + 4) * 35.2 + 3,
-                            theme='balham',
+                            height=(len(proteins_df_sel) + 4) * 35.2,
+                            theme='alpine',
                             enable_enterprise_modules=False,
                             gridOptions=gridoptions,
                             fit_columns_on_grid_load=True,
@@ -140,7 +109,7 @@ if len(proteins_df_sel) != 0:
     # Downloaded on Jan 9, 2023
     if int_return["selected_rows"] != []:
         with st.spinner('Loading data...'):
-            st.markdown(f'<p class="main-font">Detailed view of interface information</p>', unsafe_allow_html=True)
+            st.markdown(f'<p class="main-font">Detailed view of interface information:</p>', unsafe_allow_html=True)
             selected_row = int_return["selected_rows"]
 
         column_names = ['PDB ID', 'Chain 1', 'Chain 2','Contacting Residues (Chain 1)', 'Nearby Residues (Chain 1)',
@@ -153,7 +122,7 @@ if len(proteins_df_sel) != 0:
         selected_ids = selected_df.PDB_ID.to_list()
 
         df_result = interfaces_df[interfaces_df['pdbID'].isin(selected_ids)]
-        if  len(ligand_selection) >0:
+        if len(ligand_selection) >0:
             df_result = df_result[df_result['ligands'].isin(ligand_selection)]
 
         df_result = df_result.reset_index()
@@ -173,20 +142,86 @@ if len(proteins_df_sel) != 0:
         int_builder = GridOptionsBuilder.from_dataframe(df_result)
         int_builder.configure_default_column(editable=False, filterable=True, cellStyle={'text-align': 'center'})
         int_builder.configure_pagination(enabled=True, paginationAutoPageSize=False, paginationPageSize=10)
-
+        int_builder.configure_selection(selection_mode='multiple', use_checkbox=True)
         gridoptions = int_builder.build()
+        gridoptions["columnDefs"][0]["checkboxSelection"]=True
+        gridoptions["columnDefs"][0]["headerCheckboxSelection"]=True
+
         with st.spinner('Loading data...'):
             int_return = AgGrid(df_result,
                             width='100%',
                             height=(len(df_result) + 4) * 35.2 + 3,
-                            theme='balham',
+                            theme='alpine',
                             enable_enterprise_modules=False,
                             gridOptions=gridoptions,
                             fit_columns_on_grid_load=False,
                             update_mode=GridUpdateMode.SELECTION_CHANGED, # or MODEL_CHANGED
                             custom_css={".ag-header-cell-label": {"justify-content": "center"}})
 
+        selected_row = int_return["selected_rows"]
+        selected_df = pd.DataFrame(selected_row, columns=df_result.columns)
+        st.write('dflsj')
+        st.write(selected_df)
+
+
+        # Download code from here: https://discuss.streamlit.io/t/automatic-download-select-and-download-file-with-single-button-click/15141/3
+        # Downloaded on Jan 9, 2023
+
+        ################## pymol ile hot spot visulaization##################
+
+        def download_button(object_to_download, download_filename):
+            """
+            Generates a link to download the given object_to_download.
+            Params:
+            ------
+            object_to_download:  The object to be downloaded.
+            download_filename (str): filename and extension of file. e.g. mydata.csv,
+            Returns:
+            -------
+            (str): the anchor tag to download object_to_download
+            """
+            if isinstance(object_to_download, pd.DataFrame):
+                object_to_download = object_to_download.to_csv(index=False)
+
+            # Try JSON encode for everything else
+            else:
+                object_to_download = json.dumps(object_to_download)
+            try:
+                # some strings <-> bytes conversions necessary here
+                b64 = base64.b64encode(object_to_download.encode()).decode()
+
+            except AttributeError as e:
+                b64 = base64.b64encode(object_to_download).decode()
+
+            dl_link = f"""
+                    <html>
+                    <head>
+                    <title>Start Auto Download file</title>
+                    <script src="http://code.jquery.com/jquery-3.2.1.min.js"></script>
+                    <script>
+                    $('<a href="data:text/csv;base64,{b64}" download="{download_filename}">')[0].click()
+                    </script>
+                    </head>
+                    </html>
+                    """
+            return dl_link
+
+
+        def download_df():
+            components.html(
+                download_button(selected_df, st.session_state.filename),
+                height=0,
+            )
+
+        st.markdown(f'<p class="main-font"> Select from the detailed interface information table to download: </p>',
+                    unsafe_allow_html=True)
 
         with st.form("my_form", clear_on_submit=False):
             st.text_input("Enter filename", key="filename")
             submit = st.form_submit_button("Download", on_click=download_df)
+
+
+
+new_title = '<p style="font-family: sans-serif; text-align: center; color:#77216F; font-size: 16px;">For more information about how to use this website, please visit User Guide Page in the navigation panel.</p>'
+st.markdown(new_title, unsafe_allow_html=True)
+

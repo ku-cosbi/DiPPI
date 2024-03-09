@@ -1,87 +1,50 @@
 import streamlit as st
 from PIL import Image
-
+import warnings
+warnings.filterwarnings('ignore')
 
 import streamlit as st
-
+st.set_page_config(
+        page_title="User Guide",
+        page_icon=Image.open("data/icon.png"),
+        layout="wide",
+        initial_sidebar_state="expanded"
+)
 #st.subheader('DiPPI:  Drugs in Protein Protein Interface')
-original_title = '<p style="font-family:Trebuchet MS; color:#4682B4; font-size: 35px; font-weight:bold">DiPPI:  Drugs in Protein Protein Interface</p>'
+original_title = '<p style="font-family:sans-serif; color:#5E2750; font-size: 35px; font-weight:bold">DiPPI:  Drugs in Protein Protein Interface</p>'
 st.markdown(original_title, unsafe_allow_html=True)
-original_title = '<p style="font-family:Trebuchet MS; color:#4682B4; font-size: 24px; font-weight:bold">User Guide</p>'
+
+original_title = '<p style="font-family:sans-serif; color:#77216F; font-size: 24px; font-weight:bold">User Guide</p>'
 st.markdown(original_title, unsafe_allow_html=True)
 st.text('')
 st.text('')
-sub_title = '<p style="font-family:Trebuchet MS; color:#1f537f; font-size: 18px; text-align: justified"><u><i>Query By Drug</i></u></p>'
+
+sub_title = '<p style="font-family:sans-serif; color:#2C001E; font-size: 18px; text-align: justified"><u><i>Query By Drug</i></u></p>'
 st.markdown(sub_title, unsafe_allow_html=True)
 
-st.markdown(""" 
- <style>
-  .main-text
-  { 
-  font-family:Trebuchet MS; font-size:14px;text-align: justify;font-weight:bold
-  }
-</style>""", unsafe_allow_html=True)
+text = 'Multiselect area allows filtering via individual ligand identifiers from PDB, or SMILES string of the small molecule.'
+st.markdown(f'<p style="font-family:sans-serif; color:#2C001E; font-size: 18px;  class="main-text">{text}</p>', unsafe_allow_html=True)
+st.image('data/drug_explain.png',output_format="PNG")
 
-
-text = 'Users can search for a ligand of interest using Query by Ligand section. '
-st.markdown(f'<p class="title-text">{text}</p>', unsafe_allow_html=True)
-text = 'Option 1: Multiselect area allows filtering via individual ligand identifiers from PDB. Click on the checkbox ' \
-       'next to the ligand you want to expand.'
-st.markdown(f'<p class="main-text">{text}</p>', unsafe_allow_html=True)
-st.image('data/ug_1.png')
-
-
-text = 'Option 2: Click on the checkbox next to the ligand you want to expand by selecting from the list.'
-st.markdown(f'<p class="main-text">{text}</p>', unsafe_allow_html=True)
-st.image('data/ug_2.png')
-
-
-text = 'Select dataframe allows visualization of molecular descriptors for selected ligand, along with other relevant data.'
-st.markdown(f'<p class="main-text">{text}</p>', unsafe_allow_html=True)
-st.image('data/ug_3.png')
-
-text = 'Click on the checkbox next to the ligand you want to download data for. This option allows for the' \
-       ' visualization of the ligand as well.'
-st.markdown(f'<p class="main-text">{text}</p>', unsafe_allow_html=True)
-st.image('data/ug_4.png')
-
-
-#### Same for the interface part.
 
 
 st.text('')
 st.text('')
-sub_title = '<p style="font-family:Trebuchet MS; color:#1f537f; font-size: 18px; text-align: justified"><u><i>Query By Interface</i></u></p>'
+sub_title = '<p style="font-family:sans-serif; color:#2C001E; font-size: 18px; text-align: justified"><u><i>Query By Interface</i></u></p>'
 st.markdown(sub_title, unsafe_allow_html=True)
 
-st.markdown(""" 
- <style>
-  .main-text
-  { 
-  font-family:Trebuchet MS; font-size:14px;text-align: justify;font-weight:bold
-  }
-</style>""", unsafe_allow_html=True)
+text = 'Multiselect area allows filtering via either PDB ID, UniProt ID, Protein Name or UniProt Sequence.'
+st.markdown(f'<p style="font-family:sans-serif; color:#2C001E; font-size: 18px; class="main-text">{text}</p>', unsafe_allow_html=True)
+st.image('data/interface_explain.png',output_format="PNG")
 
-text = 'Users can search for a structure of interest using Query by Interface section. '
-st.markdown(f'<p class="main-text">{text}</p>', unsafe_allow_html=True)
-
-text = 'Option 1: Multiselect area allows filtering via individual structure identifiers from PDB. Click on the checkbox ' \
-       'next to the structure identifier if you want it to appear in Selected Table.'
-st.markdown(f'<p class="main-text">{text}</p>', unsafe_allow_html=True)
-st.image('data/ug_5.png')
+# text = 'More details about the legends for the tables can be accessed through the README file in Downloads tab.'
+# st.markdown(f'<p style="font-family:sans-serif; color:#2C001E; font-size: 18px; class="main-text">{text}</p>', unsafe_allow_html=True)
 
 
-text = 'Multiselect area for ligand ID further allows the limiting the view only to interfaces with selected ligand.'
-st.markdown(f'<p class="main-text">{text}</p>', unsafe_allow_html=True)
-st.image('data/ug_6.png')
+st.text('')
 
-
-text = 'Selected Table shows interface residues and the subset of interface residues that are in contact with the ligand.' \
-       ' Download button downloads the selected view.'
-st.markdown(f'<p class="main-text">{text}</p>', unsafe_allow_html=True)
-st.image('data/ug_7.png')
-
-
-
-text = 'Legends for the tables can be accessed through the README file in Downloads tab.'
-st.markdown(f'<p class="main-text">{text}</p>', unsafe_allow_html=True)
+text = 'Protein interfaces are defined by considering both contacting and nearby residues which are given separately in the table for convenience. ' \
+       'Chain 1 and Chain 2 represent two chains of the interface with the order that appears in the interface ID column. Columns 3-6 provide information about the ' \
+       'ligand-bound interface residues, while columns 7-10 provide information about the interface residues regardless of small molecule information. ' \
+       'For more detail, please refer to the article. '
+st.markdown(f'<p style="font-family:sans-serif; color:#2C001E; font-size: 18px;text-align: justified; class="main-text">{text}</p>', unsafe_allow_html=True)
