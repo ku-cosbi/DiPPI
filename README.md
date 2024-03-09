@@ -3,7 +3,7 @@
 
 DiPPI (Drugs in Protein-Protein Interfaces) provides a dataset for the investigation of drug-like small molecules in protein interfaces. DiPPI website can be accessed at http://interactome.ku.edu.tr:8501. 
 
-<img width="407" alt="manuscript_flowchart_15092022" src="https://github.com/ku-cosbi/DiPPI/assets/26777185/41d47e78-f78e-4109-b99c-10afb3005a48">
+<img width="407" alt="manuscript_flowchart_15092022" src="[https://github.com/ku-cosbi/DiPPI/assets/26777185/41d47e78-f78e-4109-b99c-10afb3005a48](https://github.com/ku-cosbi/DiPPI/assets/26777185/c4f971af-226d-4039-b5ba-af2f34d5eaa5)">
 
 
 ## Datasets
