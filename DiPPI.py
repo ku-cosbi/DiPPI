@@ -8,30 +8,57 @@ import py3Dmol
 from datetime import datetime
 from PIL import Image
 from st_aggrid import AgGrid, GridOptionsBuilder, JsCode
-
-
-
-
 from streamlit.components.v1 import html
-import streamlit as st
-from PIL import Image
+
+st.set_page_config(
+    page_title="DiPPI",
+    page_icon=Image.open("data/icon.png"),
+    layout="wide",
+    initial_sidebar_state="collapsed")
+
+col1, col2,col3 = st.columns(3)
 
 
+with col1:
+    image1 = Image.open("data/icon1.png")
+    x = image1.resize((350, 300))
+    st.image(x)
 
-PAGE_CONFIG = {"page_title":"DiPPI",
+    st.markdown(""" 
+     <style>
+      .center
+      { 
+      font-family: sans-serif; font-size:14px;text-align: justify
+      }
+    </style>""", unsafe_allow_html=True)
+with col2:
+    image1 = Image.open("data/icon2.webp")
+    x = image1.resize((400, 300))
+    st.image(x)
+    st.markdown(""" 
+     <style>
+      .center
+      { 
+      font-family: sans-serif; font-size:14px;text-align: justify
+      }
+    </style>""", unsafe_allow_html=True)
 
-               "layout":"wide",
-               "initial_sidebar_state":"auto"}
-st.set_page_config(**PAGE_CONFIG)
-#st.subheader('DiPPI:  Drugs in Protein Protein Interface')
-#st.markdown('Welcome to **D**rugs **i**n **P**rotein-**P**rotein **I**nterface Website!')
-# Fontsize and color :https://discuss.streamlit.io/t/change-font-size-and-font-color/12377, on Jan 4, 2023
-# get colors from theme config file, or set the colours to altair standards
+with col3:
+    image1 = Image.open("data/icon3.png")
+    st.image(image1)
+    st.markdown(""" 
+     <style>
+      .center
+      { 
+      font-family: sans-serif; font-size:14px;text-align: justify
+      }
+    </style>""", unsafe_allow_html=True)
 
 
-new_title = '<p style="font-family:Trebuchet MS; text-align: center; color:#4682B4; font-size: 36px;">Welcome to <strong>D</strong>rugs <strong>i</strong>n <strong>P</strong>rotein-<strong>P</strong>rotein <strong>I</strong>nterfaces Website</p>'
+new_title = '<p style="font-family: sans-serif; text-align: center; color:#5E2750; font-size: 70px;">Welcome to <strong>D</strong>rugs <strong>i</strong>n <strong>P</strong>rotein-<strong>P</strong>rotein <strong>I</strong>nterfaces Website</p>'
 st.markdown(new_title, unsafe_allow_html=True)
 st.text("")
+
 
 
 st.text("")
@@ -76,48 +103,42 @@ def nav_page(page_name, timeout_secs=1000):
 
 col1, col2 = st.columns(2)
 with col1:
-    if st.button("Query by Interface"):
-        nav_page("Query_by_Interface")
-
-with col2:
     if st.button("Query by Drug"):
         nav_page("Query_by_Drug")
 
-# Markdown code from this webpage: https://discuss.streamlit.io/t/how-to-build-an-unique-button-in-streamlit-web-program/12012/22,
-# on Jan 4, 2023
-# For content alignment this can be visited too: https://discuss.streamlit.io/t/alignment-of-content/29894/3
+    with col2:
+        if st.button("Query by Interface"):
+            nav_page("Query_by_Interface")
 
+        # Markdown code from this webpage: https://discuss.streamlit.io/t/how-to-build-an-unique-button-in-streamlit-web-program/12012/22,
+        # on Jan 4, 2023
+        # For content alignment this can be visited too: https://discuss.streamlit.io/t/alignment-of-content/29894/3
+    m = st.markdown("""
+                          <style>
+                          div.stButton > button:first-child {
+                          background-color:#77216F;
+                          border-radius:20px;
+                          border:1px solid #772953;
+                          height:5rem;
+                          width:40rem; # rougly centers the buttons
+                          font-size: 50rem;
+                          display:inline-block;
+                          cursor:pointer;
+                          color:white;
+                          font-family: sans-serif;
+                          font-weight:bold;
+                          font-size: 32px;
+                          } </style>""", unsafe_allow_html=True)
 
-m = st.markdown(""" 
- <style>
- div.stButton > button:first-child {
-    background-color:#4682B4;
-	border-radius:3px; # 10px 10px 10px 10px
-	border:1px solid #4682B4;
-	height:3em;
-    width:23.4em; # rougly centers the buttons
-	display:inline-block;
-	cursor:pointer;
-	color:white;
-	font-family:Trebuchet MS;
-	font-size:25px;
-	font-weight:bold;
-	padding:12px 24px;
-	text-decoration:none;
-	text-shadow:0px -1px 0px #4682B4;
-}
-</style>""", unsafe_allow_html=True)
-
-
-col1, col2  = st.columns(2)
+col1, col2 = st.columns(2)
 with col1:
-    image1 = Image.open("data/welcome1.png")
+    image1 = Image.open("data/welcome_1.png")
     st.image(image1)
     st.markdown(""" 
      <style>
       .center
       { 
-      font-family:Trebuchet MS; font-size:14px;text-align: center
+      font-family: sans-serif; font-size:14px;text-align: justify
       }
     </style>""", unsafe_allow_html=True)
 
@@ -130,12 +151,17 @@ with col2:
     st.text("")
     st.text("")
     st.text("")
-    new_title = '<p style="font-family:Trebuchet MS; text-align: center; color:#4682B4; font-size: 20px;">DiPPI is a website for the search of interface bound drug-like molecules, and FDA-approved drugs.' \
-                'It has two modules, one for the query of drug-boung interfaces via ligand ID, and the other one is through the PDB ID of the investigated protein structure. We also provide clustering and characterization' \
-                'for selected ligands and interfaces. Users can enter single query or dpwnload batch data we provided.Our website provides an easy-to-follow scheme to guide users on the selection of alternative drugs or targets ' \
-                'in a possible drug repurposing study through its well-curated and clustered interface and drug-like molecule data.</p>'
-    st.markdown(new_title, unsafe_allow_html=True)
+    new_title = '<p style="font-family: sans-serif; text-align: justify; color:#2C001E; font-size: 20px;">DiPPI is a website for searching interface-bound drug-like molecules and FDA-approved drugs.' \
+            'It has two modules, one for the query of drug-bound interfaces via ligand ID and the other through the PDB ID of the investigated protein structure.</p>'
 
-new_title = '<p style="font-family:Trebuchet MS; text-align: center; color:#4682B4; font-size: 16px;">For more information about how to use this website, please visit User Guide Page in the navigation panel.</p>'
+
+
+    sec  = '<p style="font-family: sans-serif; text-align: justify; color:#2C001E; font-size: 20px;">We also provide clustering and characterization' \
+            'for selected ligands and interfaces. Users can enter a single query or download batch data we provided. Our website offers an easy-to-follow scheme to guide users on the selection of alternative drugs or targets ' \
+            'in a possible drug repurposing study through its well-curated and clustered interface and drug-like molecule data.</p>'
+    st.markdown(new_title, unsafe_allow_html=True)
+    st.markdown(sec, unsafe_allow_html=True)
+
+new_title = '<p style="font-family: sans-serif; text-align: center; color:#77216F; font-size: 16px;">For more information about how to use this website, please visit User Guide Page in the navigation panel.</p>'
 st.markdown(new_title, unsafe_allow_html=True)
 
